@@ -50,6 +50,7 @@ class HiOnia2MuMuPAT : public edm::EDProducer {
     virtual void endJob() ;
     bool isAbHadron(int pdgID);
     bool isAMixedbHadron(int pdgID, int momPdgID);
+    reco::GenParticleRef findMotherRef(reco::GenParticleRef GenParticle, int GenParticlePDG);
     std::pair<int, std::pair<float, float> > findJpsiMCInfo(reco::GenParticleRef genJpsi);
 
   // ----------member data ---------------------------
@@ -57,6 +58,7 @@ class HiOnia2MuMuPAT : public edm::EDProducer {
     edm::EDGetTokenT< edm::View<pat::Muon> >        muonsToken_;         
     edm::EDGetTokenT<reco::BeamSpot>                thebeamspotToken_;
     edm::EDGetTokenT<reco::VertexCollection>        thePVsToken_;
+    edm::EDGetTokenT<reco::TrackCollection>         recoTracksToken_;
     edm::EDGetTokenT<reco::GenParticleCollection>   theGenParticlesToken_;
     StringCutObjectSelector<pat::Muon> higherPuritySelection_;
     StringCutObjectSelector<pat::Muon> lowerPuritySelection_; 

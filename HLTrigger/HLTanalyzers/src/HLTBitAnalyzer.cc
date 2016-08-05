@@ -43,7 +43,7 @@ HLTBitAnalyzer::HLTBitAnalyzer(edm::ParameterSet const& conf)  :
   m_l1extraemn      = edm::InputTag(l1extramc_, "NonIsolated");
   m_l1extrajetc     = edm::InputTag(l1extramc_, "Central");
   m_l1extrajetf     = edm::InputTag(l1extramc_, "Forward");
-  m_l1extrajet      = edm::InputTag("gctInternJetProducer","Internal","ANALYSIS");
+  m_l1extrajet      = edm::InputTag("gctInternJetProducer","Internal","reHLT");
   m_l1extrataujet   = edm::InputTag(l1extramc_, "Tau");
   m_l1extramet      = edm::InputTag(l1extramc_, "MET");
   m_l1extramht      = edm::InputTag(l1extramc_, "MHT");

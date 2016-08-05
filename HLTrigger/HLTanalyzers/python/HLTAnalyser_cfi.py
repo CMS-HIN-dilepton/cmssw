@@ -18,8 +18,8 @@ hltanalysis = cms.EDAnalyzer("HLTAnalyzer",
     lastLumi                         = cms.untracked.int32(-1),
 
     ### Trigger objects
-    l1GctHFBitCounts                = cms.InputTag("hltGctDigis"),
-    l1GctHFRingSums                 = cms.InputTag("hltGctDigis"),
+    l1GctHFBitCounts                = cms.InputTag("hltCaloStage1LegacyFormatDigis"),
+    l1GctHFRingSums                 = cms.InputTag("hltCaloStage1LegacyFormatDigis"),
     l1GtObjectMapRecord             = cms.InputTag("hltL1GtObjectMap::HLT"),
     l1GtReadoutRecord               = cms.InputTag("hltGtDigis::HLT"),
 

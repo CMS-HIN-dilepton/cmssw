@@ -84,7 +84,8 @@ SiPixelTrackResidualSource::SiPixelTrackResidualSource(const edm::ParameterSet& 
    ttrhbuilder_ = pSet_.getParameter<std::string>("TTRHBuilder");
    ptminres_= pSet.getUntrackedParameter<double>("PtMinRes",4.0) ;
    beamSpotToken_ = consumes<reco::BeamSpot>(std::string("offlineBeamSpot"));
-   offlinePrimaryVerticesToken_ = consumes<reco::VertexCollection>(std::string("offlinePrimaryVertices"));
+   vtxsrc_=pSet_.getUntrackedParameter<std::string>("vtxsrc",  "offlinePrimaryVertices");
+   offlinePrimaryVerticesToken_ =  consumes<reco::VertexCollection>(vtxsrc_);// consumes<reco::VertexCollection>(std::string("hiSelectedVertex"));     //"offlinePrimaryVertices"));
    generalTracksToken_ = consumes<reco::TrackCollection>(pSet_.getParameter<edm::InputTag>("tracksrc"));
    tracksrcToken_ = consumes<std::vector<Trajectory> >(pSet_.getParameter<edm::InputTag>("trajectoryInput"));
    trackToken_ = consumes<std::vector<reco::Track> >(pSet_.getParameter<edm::InputTag>("trajectoryInput"));
@@ -874,26 +875,26 @@ void SiPixelTrackResidualSource::analyze(const edm::Event& iEvent, const edm::Ev
   edm::Handle<std::vector<Trajectory> > trajCollectionHandle;
   //iEvent.getByLabel(tracksrc_,trajCollectionHandle);
   iEvent.getByToken ( tracksrcToken_, trajCollectionHandle );
-  const std::vector<Trajectory> trajColl = *(trajCollectionHandle.product());
+  const std::vector<Trajectory>& trajColl = *(trajCollectionHandle.product());
    
   //get tracks
   edm::Handle<std::vector<reco::Track> > trackCollectionHandle;
   //iEvent.getByLabel(tracksrc_,trackCollectionHandle);
   iEvent.getByToken( trackToken_, trackCollectionHandle );
 
-  const std::vector<reco::Track> trackColl = *(trackCollectionHandle.product());
+  const std::vector<reco::Track>& trackColl = *(trackCollectionHandle.product());
 
   //get the map
   edm::Handle<TrajTrackAssociationCollection> match;
   //iEvent.getByLabel(tracksrc_,match);
   iEvent.getByToken( trackAssociationToken_, match);
-  const TrajTrackAssociationCollection ttac = *(match.product());
+  const TrajTrackAssociationCollection& ttac = *(match.product());
 
   // get clusters
   edm::Handle< edmNew::DetSetVector<SiPixelCluster> >  clusterColl;
   //iEvent.getByLabel( clustersrc_, clusterColl );
   iEvent.getByToken( clustersrcToken_, clusterColl );
-  const edmNew::DetSetVector<SiPixelCluster> clustColl = *(clusterColl.product());
+  const edmNew::DetSetVector<SiPixelCluster>& clustColl = *(clusterColl.product());
 
   if(debug_){
     std::cout << "Trajectories\t : " << trajColl.size() << std::endl;
@@ -922,7 +923,7 @@ void SiPixelTrackResidualSource::analyze(const edm::Event& iEvent, const edm::Ev
     
     if(abs(d0)<15 && abs(dz)<50) crossesPixVol = true;
 
-    std::vector<TrajectoryMeasurement> tmeasColl =traj_iterator->measurements();
+    const std::vector<TrajectoryMeasurement>& tmeasColl =traj_iterator->measurements();
     std::vector<TrajectoryMeasurement>::const_iterator tmeasIt;
     //loop on measurements to find out whether there are bpix and/or fpix hits
     for(tmeasIt = tmeasColl.begin();tmeasIt!=tmeasColl.end();tmeasIt++){
@@ -946,7 +947,7 @@ void SiPixelTrackResidualSource::analyze(const edm::Event& iEvent, const edm::Ev
       
       if(crossesPixVol) meNofTracksInPixVol_->Fill(0,1);
 
-      std::vector<TrajectoryMeasurement> tmeasColl = traj_iterator->measurements();
+      const std::vector<TrajectoryMeasurement>& tmeasColl = traj_iterator->measurements();
       for(std::vector<TrajectoryMeasurement>::const_iterator tmeasIt = tmeasColl.begin(); tmeasIt!=tmeasColl.end(); tmeasIt++){   
 	if(! tmeasIt->updatedState().isValid()) continue; 
 	

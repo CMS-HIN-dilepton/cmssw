@@ -26,7 +26,7 @@ hltanalysis.PrimaryVertices             = cms.InputTag("hiSelectedVertex")
 
 hltanalysis.RunParameters = cms.PSet(
     Monte                = cms.bool(False),
-    Debug                = cms.bool(True),
+    Debug                = cms.bool(False),
     UseTFileService      = cms.untracked.bool(True),
     
     ### added in 2010 ###
@@ -48,12 +48,12 @@ hltanalysis.RunParameters = cms.PSet(
     DoSuperClusters      = cms.untracked.bool(False),
     
     ### Muon
-    DoMuons            = cms.untracked.bool(False),
-    DoL1Muons            = cms.untracked.bool(False),
-    DoL2Muons            = cms.untracked.bool(False),
-    DoL3Muons            = cms.untracked.bool(False),
-    DoOfflineMuons       = cms.untracked.bool(False),
-    DoQuarkonia          = cms.untracked.bool(False)
+    DoMuons            = cms.untracked.bool(True),
+    DoL1Muons            = cms.untracked.bool(True),
+    DoL2Muons            = cms.untracked.bool(True),
+    DoL3Muons            = cms.untracked.bool(True),
+    DoOfflineMuons       = cms.untracked.bool(True),
+    DoQuarkonia          = cms.untracked.bool(True)
     )
 
 
